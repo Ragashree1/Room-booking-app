@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        body, h1 {
+        margin: 0;
+        padding: 0;
+        }
+
+        
+        .header-title {
+            display: block;
+            position: absolute;
+            top: 140px;
+            left: 10;
+            margin: 20px; 
+            z-index: 1;
+            color: #244971
+        }
+
+        .someMargin{
+            padding-top: 100px;
+        }
+
+               
+        #login-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        }
+
+        #login-image-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+        }
+
+        #login-form-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        }
+
+        #login-form {
+        width: 300px;
+        }
+
+        .input-field {
+        width: 100%; 
+        padding: 10px; 
+        font-size: 16px; 
+        border: 1px solid #ccc; 
+        border-radius: 4px; 
+        box-sizing: border-box; 
+        margin-bottom: 10px;
+        }
+
+        .login-button {
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        background-color: #007bff; 
+        color: #fff; 
+        border-radius: 4px; 
+        cursor: pointer; 
+        transition: background-color 0.3s ease; 
+        }
+
+        .login-button:hover {
+        background-color: #0056b3; 
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div id="login-container">
+        
+        <div id="login-image-container">
+          
+          <h2 class="header-title">Welcome to our Room Booking App</h2>
+          <br>
+          <img class="someMargin" src="{% static 'working.jpg' %}" alt="Login Image">
+        </div>
+        <div id="login-form-container">
+          <form id="login-form" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+
+
+            <img src="{% static 'uowLogo.png' %}" alt="schLogo" style="width: 200px; height: auto;">
+            <br><br><br>
+            <select id="user_type" name="user_type">
+              <option value="S">Student</option>
+              <option value="T">Staff</option>
+            </select>
+            <br>
+            <input type="text" name="username" id="username" class="input-field" placeholder="Staff or Student ID" autocomplete="off">
+            <br>
+            <input type="password" name="password" class="input-field" id="password" placeholder="Password" autocomplete="off">
+            <br><br>
+            <input class="login-button" type="submit" value="Login">
+          </form>
+        </div>
+      </div>
+</body>
+</html>

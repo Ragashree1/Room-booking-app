@@ -4,9 +4,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bookings</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            /* border-bottom: 1px solid #ddd; */
+            border: 1px solid black;
+            padding: 15px;
+            text-align: center;
+	        vertical-align: middle;
+        }
+
+        caption {
+            font-weight: bold;
+            font-size: 20px;
+            /* text-align: left; */
+            color: #244971;
+            margin-bottom: 16px;
+        }
+
+    </style>
 </head>
 <body>
-    
+    <table>
+        <caption>List of bookings made by user</caption>
+        <thead>
+            <tr>
+                <th>Room name</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Time slot</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.room.name }}</td>
+                <td>{{booking.room.location}}</td>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.time_slot }} - {{ booking.end_time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+     
 </body>
 </html>

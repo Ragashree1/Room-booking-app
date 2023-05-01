@@ -78,6 +78,14 @@
         background-color: #0056b3; 
         }
 
+        .error{
+          color:crimson;
+          margin-top: 0;
+          margin-bottom: 0;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -105,9 +113,17 @@
             <input type="text" name="username" id="username" class="input-field" placeholder="Staff or Student ID" autocomplete="off">
             <br>
             <input type="password" name="password" class="input-field" id="password" placeholder="Password" autocomplete="off">
+            {% if messages %}
+                {% for message in messages %}
+                   {% if message.tags == 'error' %}
+                      <p class="error">{{message}}</p>
+                   {% endif %}
+                {% endfor %}
+            {% endif %}
             <br><br>
             <input class="login-button" type="submit" value="Login">
           </form>
+
         </div>
       </div>
 </body>

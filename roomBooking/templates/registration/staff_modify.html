@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Room Reservation Form</title>
+	<style>
+		/* style the menu bar */
+		.menu-bar {
+			background-color: dimgrey;
+			color: white;
+            font-family: Arial;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 50px;
+			padding: 10px;
+		}
+
+       /* style the logo image */
+		.logo {
+			height: 50px;
+		}
+
+		/* style the company name */
+		.company-name {
+			font-size: 18px;
+			font-weight: bold;
+			margin: 0;
+		}
+
+		/* style the user dropdown menu */
+		.user-dropdown {
+			position: relative;
+			display: inline-block;
+			margin-left: auto;
+			font-size: 16px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+
+		.user-dropdown-content {
+			display: none;
+			position: absolute;
+			right: 0;
+			background-color: #f9f9f9;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			z-index: 1;
+		}
+
+		.user-dropdown:hover .user-dropdown-content {
+			display: block;
+		}
+
+		.user-dropdown-content a {
+			color: #333;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+
+		.user-dropdown-content a:hover {
+			background-color: #f1f1f1;
+		}
+
+        body {
+            font-family: Arial;
+            margin: 0 auto;
+            width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 50px;
+		}
+
+		form > input, select {
+			margin-bottom: 20px;
+			padding: 10px;
+			width: 300px;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+		}
+
+		label {
+			display: inline-block;
+			width: 300px;
+			text-align: left;
+			margin-right: 20px;
+		}
+
+
+		button {
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+			cursor: pointer;
+			font-size: 16px;
+			font-weight: bold;
+			transition: background-color 0.3s ease-in-out;
+		}
+
+		button:hover {
+			background-color: #0062cc;
+		}
+	</style>
+</head>
+<body>
+    <div class="menu-bar">
+		<div>
+            <img class="logo" src="{% static 'uowLogo.png' %}" alt="Company Logo"> 
+		</div>
+		<div class="user-dropdown">
+			<p id="username">{{user}}</p>
+			<div class="user-dropdown-content">
+				<a href="{% url 'login' %}">Logout</a>
+			</div>
+		</div>
+	</div>
+    <h1>Modify Room Page</h1>
+	<form method="post">
+		
+		{% csrf_token %}
+			
+		<label for="room-name">Room Name:</label>
+		<input type="text" id="room-name" name="room-name" value="{{ room.name }}" required>
+
+		<label for="room-capacity">Room Capacity:</label>
+		<input type="number" id="room-capacity" name="room-capacity" value="{{room.capacity}}" required>
+
+		<label for="room-location">Room Location:</label>
+		<input type="text" id="room-location" name="room-location" value="{{room.location}}" required>
+
+		<label for="room-price">Room Price:</label>
+		<input type="number" id="room-price" name="room-price" value="{{room.price}}" required>
+
+		<label for="room-promotion-code">Room Promotion Code:</label>
+		<input type="text" id="room-promotion-code" name="room-promotion-code">
+
+		<label for="price-per-hour">Price Per Hour:</label>
+		<input type="number" id="price-per-hour" name="price-per-hour" value="{{room.price}}" required>
+
+		<label for="start-time">Start Time:</label>
+		<input type="time" id="start-time" min="07:00" max="22:00" name="appt-time" name="start-time" value="08:00" required>
+
+		<label for="end-time">End Time:</label>
+		<input type="time" id="end-time" min="07:00" max="22:00" name="appt-time" name="end-time" value="22:00" required>
+
+		<div class="checkbox-group">
+			<label>Day Available:</label><br/>
+			<input type="checkbox" id="monday" name="day-available" value="monday">Monday</input><br/>
+			<input type="checkbox" id="tuesday" name="day-available" value="tuesday">Tuesday</input><br/>
+			<input type="checkbox" id="wednesday" name="day-available" value="wednesday">Wednesday</input><br/>
+			<input type="checkbox" id="thursday" name="day-available" value="thursday">Thursday</input><br/>
+            <input type="checkbox" id="Friday" name="day-available" value="Friday">Friday</input><br/>
+            <input type="checkbox" id="Saturday" name="day-available" value="Saturday">Saturday</input><br/>
+            <input type="checkbox" id="Sunday" name="day-available" value="Sunday">Sunday</input><br/>
+        </div>
+        <br/><br/>
+        <div class="buttonGrp">
+            <button type="button" href="#" onclick="previous()">Back</button>
+            <button type="button">Delete</button>
+            <button type="button">Submit</button>
+        </div>
+	</form>
+
+	<script>
+        function previous() {
+            window.history.back();
+        }
+      </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/nav-style.css">
+	<title>Top Horizontal Menu Bar</title>
+    <script>
+        function toggleBtn() {
+            var roomLaunchStatus = document.getElementById("roomLaunch")
+            
+            if(roomLaunchStatus.innerText == "Online") {
+                roomLaunchStatus.innerText = "Offline"
+            }
+            else{
+                roomLaunchStatus.innerText ="Online"
+            }
+        }
+    </script>
+	<style>
+
+        body {
+            margin: 0 auto;
+            width: 800px;
+        }
+
+        .room-bar {
+            font-family: Arial;
+			display:flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 50px;
+        }
+
+        .room-list {
+            width: 100%;
+            font-family: Arial;
+            display:inline-flex;
+        }
+
+        .room-table {
+            width: 100%;
+			border-collapse:collapse;
+        }
+
+        th, td {
+            border: 2px solid;
+            text-align: center;
+            align-items: center;
+        }
+
+
+        td {
+            height: 100px;
+
+        }
+
+        #Rooms {
+            width:40%;
+        }
+
+        #Locations {
+            width: 20%;
+        }
+
+        #Capacity {
+            width: 20%
+        }
+        #Price {
+            width: 10%;
+        }
+
+        #Status {
+            width: 10%;
+        }
+
+        button {
+            width: 55px;
+        }
+	</style>
+</head>
+<body>
+    <nav>
+        <div class="logo-container">
+            <img src="../images/uowlogo.png" alt="logo">
+        </div>
+        <div class="navigation-container">
+          <ul>
+            <li>Staff</li>
+            <li><a href="../index.html">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    <div class="room-bar">
+        <h1>Rooms</h1>
+        <button>Add Room</button>
+    </div>
+
+    <div class="room-list">
+        <table class ="room-table">
+            <tr>
+                <th id="Rooms">Room</td>
+                <th id="Locations">Location</td>
+                <th id="Capacity">Capacity</th>
+                <th id="Price">Price</td>
+                <th id="Status">Status</td>
+            </tr>
+            <tr>
+                <td>
+                    Business Room <br/>
+                </td>
+                <td>A.1.17</td>
+                <td>50</td>
+                <td>$5</td>
+                <td>
+                    <a href="staff_modify.html">Edit</a><br/>
+                    <button id="roomLaunch" onclick="toggleBtn()">Online</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+   
+</body>
+</html>

@@ -1,9 +1,209 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+	<title>Top Horizontal Menu Bar</title>
+    
+    
+	<style>
+        body {
+            margin: 0 auto;
+            width: 600px;
+        }
+		/* style the menu bar */
+		.menu-bar {
+			background-color: dimgrey;
+			color: white;
+            font-family: Arial;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 50px;
+			padding: 10px;
+		}
+
+        .room-bar {
+            font-family: Arial;
+			display:flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 50px;
+        }
+
+        .room-list {
+            width: 100%;
+            font-family: Arial;
+            display:inline-flex;
+        }
+
+        .room-table {
+            width: 100%;
+			border-collapse:collapse;
+        }
+
+        th, td {
+            border: 2px solid;
+            text-align: center;
+            align-items: center;
+        }
+
+
+        td {
+            height: 100px;
+
+        }
+
+        #Rooms {
+            width:40%;
+        }
+
+        #Locations {
+            width: 20%;
+        }
+
+        #Capacity {
+            width: 20%
+        }
+        #Price {
+            width: 10%;
+        }
+
+        #Status {
+            width: 10%;
+        }
+
+        button {
+            width: 55px;
+        }
+
+
+		/* style the logo image */
+		.logo {
+			height: 50px;
+		}
+
+		/* style the company name */
+		.company-name {
+			font-size: 18px;
+			font-weight: bold;
+			margin: 0;
+		}
+
+		/* style the user dropdown menu */
+		.user-dropdown {
+			position: relative;
+			display: inline-block;
+			margin-left: auto;
+			font-size: 16px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+
+		.user-dropdown-content {
+			display: none;
+			position: absolute;
+			right: 0;
+			background-color: #f9f9f9;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			z-index: 1;
+		}
+
+		.user-dropdown:hover .user-dropdown-content {
+			display: block;
+		}
+
+		.user-dropdown-content a {
+			color: #333;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+
+		.user-dropdown-content a:hover {
+			background-color: #f1f1f1;
+		}
+
+        .offline{
+            background-color: rosybrown;
+        }
+
+        .online{
+            background-color: rgb(159, 228, 159);
+        }
+	</style>
 </head>
 <body>
-    <h1>Welcome Staff</h1>
+	<div class="menu-bar">
+		<div>
+            <img class="logo" src="{% static 'uowLogo.png' %}" alt="Company Logo"> 
+		</div>
+		<div class="user-dropdown">
+			<p id="username">{{user}}</p>
+			<div class="user-dropdown-content">
+				<a href="{% url 'login' %}">Logout</a>
+			</div>
+		</div>
+	</div>
+
+    <div class="room-bar">
+        <h1>Rooms</h1>
+        <button>Add Room</button>
+    </div>
+
+    <div class="room-list">
+        <table class ="room-table">
+            <tr>
+                <th id="Rooms">Room</td>
+                <th id="Locations">Location</td>
+                <th id="Capacity">Capacity</th>
+                <th id="Price">Price</td>
+                <th id="Status">Status</td>
+            </tr>
+
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room.name }}</td>
+                <td>{{room.location}}</td>
+                <td>{{ room.capacity }}</td>
+                <td>${{ room.price }}</td>
+                <td>
+    
+    
+                    <form id="myForm{{ room.name }}" action="{% url 'staff_modify' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="r_name" value="{{ room.name }}">
+                        <button type='button' id="{{room.name}}" class="roomLaunch online" >Online</button>
+                        <button type="submit">Edit</button>
+                    </form>
+<!--                       
+                    <a href="{% url 'staff_modify' %}?r_name={{ room.name }}">Edit</a>
+                    <button id="{{room.name}}" class="roomLaunch online" >Online</button> -->
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script>
+
+        var roomLaunchStatus = document.getElementsByClassName("roomLaunch");
+
+        for (var i = 0; i < roomLaunchStatus.length; i++) {
+            roomLaunchStatus[i].addEventListener("click", function() {
+                var room = this;
+                if(room.textContent == "Online") {
+                    room.classList.remove("online")
+                    room.classList.add("offline")
+                    room.textContent = "Offline"
+                }
+                else{
+                    room.classList.remove("offline")
+                    room.classList.add("online")
+                    room.textContent ="Online"
+                }
+            });
+        }
+
+    </script>
 </body>
 </html>

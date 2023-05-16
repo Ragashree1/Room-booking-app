@@ -30,6 +30,33 @@
             margin-bottom: 16px;
         }
 
+        .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+        background-color: #4CAF50;
+        border: none;
+        cursor: pointer;
+        }
+
+        .btn-back {
+        background-color: #555;
+        }
+
+        .btn:hover {
+        background-color: #3e8e41;
+        }
+
+        .btn-back:hover {
+        background-color: #333;
+        }
+
+
     </style>
 </head>
 <body>
@@ -54,6 +81,15 @@
             {% endfor %}
         </tbody>
       </table>
-     
+      <br>
+      <br>
+      <a href="#" class="btn btn-back" onclick="previous()">Back</a>
+    
+
+      <script>
+        function previous() {
+            window.history.back();
+        }
+      </script>
 </body>
 </html>

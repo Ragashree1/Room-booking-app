@@ -102,14 +102,6 @@
                 <td>{{ booking.date }}</td>
                 <td>{{ booking.time_slot }} - {{ booking.end_time }}</td>
                 <td>
-                    <form id="myForm{{ booking.id }}" action="{% url 'modify_booking' %}" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="id" value="{{ booking.id }}">
-                        <input type="hidden" name="r_name" value="{{ booking.room.name }}">
-                        <input type="hidden" name="time" value="{{ booking.room.time_slot }}">
-                        <input type="hidden" name="date" value="{{ booking.room.date }}">
-                        <button type="submit">Edit</button>
-                    </form>
                     <!-- <a href="student_modifyBooking.html">Modify</a> -->
                 </td>
             </tr>

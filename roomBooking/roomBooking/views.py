@@ -36,7 +36,8 @@ def student(request):
     bookings = Reservation.objects.select_related('room').filter(user=request.user)
     context = {
          'week' : currentWeek,
-         'bookings': bookings
+         'bookings': bookings,
+         'user': request.user.name
     }
     return render(request, 'registration/student.html', context)
 
@@ -85,3 +86,21 @@ def student_bookings(request):
 def payment(request):
      if request.method == 'POST':
           return render(request, 'registration/payment.html')
+     
+
+def roomModify(request):
+     room = get_object_or_404(Room, name=request.POST.get('room-name'))
+     if request.POST.get('modType') == 'modify':
+          room.location = request.POST.get('room-location')
+          room.capacity = request.POST.get('room-capacity')
+          room.price = request.POST.get('price-per-hour')
+          room.save()
+          return redirect('staff')
+     else:
+        room.delete()
+        return redirect('staff')
+     
+
+def modify_booking(request):
+     reservation = get_object_or_404(Reservation, id=request.POST.get('id'))
+     return  render(request, 'registration/student_modifyBooking.html')

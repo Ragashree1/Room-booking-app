@@ -18,7 +18,7 @@ room3.save()
 room4.save()
 
 # Create bookings for the user
-reservation = Reservation(user=user, room=room, time_slot='10:00:00', date='2023-05-01')
+reservation = Reservation(user=user, room=room, time_slot='10:00:00', date='2023-05-22')
 reservation2 = Reservation(user=user, room=room2, time_slot='14:00:00', date='2023-05-03')
 reservation3 = Reservation(user=user, room=room3, time_slot='11:00:00', date='2023-05-05')
 reservation4 = Reservation(user=user, room=room4, time_slot='16:00:00', date='2023-05-07')

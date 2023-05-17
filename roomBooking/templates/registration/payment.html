@@ -62,6 +62,10 @@
 			font-size: 14px;
 			margin: 5px 0;
 		}
+		.hidden {
+		display: none;
+		}
+
 	</style>
 </head>
 <body>
@@ -69,12 +73,12 @@
 		<img src="{% static 'uowLogo.png' %}" alt="University of Wollongong Logo">
 		<h1>Payment</h1>
 	</header>
-	<form action="{% url 'student' %}" method="post">
+	<form action="{% url 'success' %}" method="post">
 		{% csrf_token %}
 		<br>
 		<div id="credit_card_fields">
 			<label for="card_number">Card Number:</label>
-			<input type="text" id="card_number" name="card_number" required pattern="[0-9]{16}" placeholder="Enter card number (16 digits)">
+			<input type="text" id="card_number" name="card_number" value='1111111111111111' required pattern="[0-9]{16}" placeholder="Enter card number (16 digits)">
 			<br>
 			<label for="exp_date">Expiration Date (MM/YY):</label>
 			<input type="text" id="exp_date" name="exp_date" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" placeholder="Enter expiration date (MM/YY)">
@@ -89,10 +93,18 @@
 			<br>
 		</div>
 		<label for="amount">Amount:</label>
-		<input type="number" id="amount" name="amount" min="1" placeholder="Enter amount">
+		<input type="number" id="amount" name="amount" min="1" placeholder="Enter amount" value="{{price}}">
 		<br>
+
+	
+		<input type="hidden" id="room-name" name="room-name" value="{{room}}" required>
+       
+        <input type="hidden" id="date" name="date" value="{{date}}" />
+
+        <input id="start-time" type="hidden" name="start-time" value="{{start_time}}" />
+    
+        <input id="end-time" type="hidden" name="end-time" value="{{end_time}}" />
 		<input type="submit" value="Confirm Payment">
-		<!-- <button type="button" onclick="confirmPayment()">Cancel</button> -->
 	</form>
 
 	<script>
@@ -159,7 +171,7 @@ function displayFields() {
 		
 
 		if (successful) {
-			window.location.href = '{% url "student" %}';
+			window.location.href = '{% url "success" %}';
 		} else {
 			alert("Payment details are incorrect. Please check and try again.");
 		}

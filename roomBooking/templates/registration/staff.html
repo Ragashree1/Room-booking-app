@@ -4,23 +4,12 @@
 <head>
 	<title>Top Horizontal Menu Bar</title>
     
-    
+    <link rel="stylesheet" href="{% static 'css/nav-style.css' %}">
 	<style>
         body {
             margin: 0 auto;
-            width: 600px;
+            width: 800px;
         }
-		/* style the menu bar */
-		.menu-bar {
-			background-color: dimgrey;
-			color: white;
-            font-family: Arial;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			height: 50px;
-			padding: 10px;
-		}
 
         .room-bar {
             font-family: Arial;
@@ -76,54 +65,6 @@
             width: 55px;
         }
 
-
-		/* style the logo image */
-		.logo {
-			height: 50px;
-		}
-
-		/* style the company name */
-		.company-name {
-			font-size: 18px;
-			font-weight: bold;
-			margin: 0;
-		}
-
-		/* style the user dropdown menu */
-		.user-dropdown {
-			position: relative;
-			display: inline-block;
-			margin-left: auto;
-			font-size: 16px;
-			font-weight: bold;
-			cursor: pointer;
-		}
-
-		.user-dropdown-content {
-			display: none;
-			position: absolute;
-			right: 0;
-			background-color: #f9f9f9;
-			min-width: 160px;
-			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-			z-index: 1;
-		}
-
-		.user-dropdown:hover .user-dropdown-content {
-			display: block;
-		}
-
-		.user-dropdown-content a {
-			color: #333;
-			padding: 12px 16px;
-			text-decoration: none;
-			display: block;
-		}
-
-		.user-dropdown-content a:hover {
-			background-color: #f1f1f1;
-		}
-
         .offline{
             background-color: rosybrown;
         }
@@ -134,17 +75,17 @@
 	</style>
 </head>
 <body>
-	<div class="menu-bar">
-		<div>
-            <img class="logo" src="{% static 'uowLogo.png' %}" alt="Company Logo"> 
-		</div>
-		<div class="user-dropdown">
-			<p id="username">{{user}}</p>
-			<div class="user-dropdown-content">
-				<a href="{% url 'login' %}">Logout</a>
-			</div>
-		</div>
-	</div>
+    <nav>
+        <div class="logo-container">
+            <img src="{% static 'images/uowlogo.png' %}" alt="logo">
+        </div>
+        <div class="navigation-container">
+          <ul>
+            <li>{{user}}</li>
+            <li><a href="{% url 'login' %}">Logout</a></li>
+          </ul>
+        </div>
+    </nav>
 
     <div class="room-bar">
         <h1>Rooms</h1>
@@ -176,9 +117,6 @@
                         <button type='button' id="{{room.name}}" class="roomLaunch online" >Online</button>
                         <button type="submit">Edit</button>
                     </form>
-<!--                       
-                    <a href="{% url 'staff_modify' %}?r_name={{ room.name }}">Edit</a>
-                    <button id="{{room.name}}" class="roomLaunch online" >Online</button> -->
                 </td>
             </tr>
             {% endfor %}

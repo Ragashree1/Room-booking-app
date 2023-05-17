@@ -84,7 +84,9 @@
 
     <div class="room-bar">
         <h1>My Bookings</h1>
+        <button onclick="newBooking()">Add</button>
     </div>
+
     
     <div class="room-list">
         <table class ="room-table">
@@ -110,12 +112,15 @@
                         <input type="hidden" name="date" value="{{ booking.room.date }}">
                         <button type="submit">Edit</button>
                     </form>
-                    <!-- <a href="student_modifyBooking.html">Modify</a> -->
                 </td>
             </tr>
             {% endfor %}
         </table>
     </div>
-   
+   <script>
+    function newBooking() {
+			window.location.href = "{% url 'makeBooking' %}";
+		}
+   </script>
 </body>
 </html>

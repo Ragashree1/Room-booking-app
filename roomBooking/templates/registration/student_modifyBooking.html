@@ -1,8 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Modify Room Booking</title>
-	<link rel="stylesheet" href="../css/nav-style.css">
+	<link rel="stylesheet" href="{% static 'css/nav-style.css' %}">
 	<style>
         body {
             margin: 0 auto;
@@ -56,56 +57,65 @@
 	</style>
 	<script>
 		function returnHome() {
-			window.location.href = "student_bookings.html";
+			window.location.href = "{% url 'student_bookings' %}";
 		}
 
 		function deleteBooking() {
-			var response = confirm("Are you sure you want to delete this room?");
+			var response = confirm("Are you sure you want to delete this booking?");
 
 			if (response == true) {
-				alert('Deleted Booking');
-			} else {
-				window.location.href = "student_bookings.html";
-			}
+				document.getElementById( "modType" ).value = "delete";
+				alert('Deleted Room');
+				return true;
+			} 
+			return false;
 		}
 	</script>
 </head>
 <body>
 	<nav>
-		<div class="logo-container">
-			<img src="../images/uowlogo.png" alt="logo">
-		</div>
-		<div class="navigation-container">
-		  <ul>
-			<li>Student</li>
-			<li><a href="../index.html">Logout</a></li>
-		  </ul>
-		</div>
-	</nav>
+        <div class="logo-container">
+            <img src="{% static 'images/uowlogo.png' %}" alt="logo">
+        </div>
+        <div class="navigation-container">
+          <ul>
+            <li>{{user}}</li>
+            <li><a href="{% url 'login' %}">Logout</a></li>
+          </ul>
+        </div>
+    </nav>
 
     <h1>Modify Booking Page</h1>
-	<form>
-        <label for="room-location">Room Location:</label>
-		<input type="text" id="room-location" name="room-location" required>
-
-		<label for="room-capacity">Room Capacity:</label>
-		<input type="number" id="room-capacity" name="room-capacity" required>
+	<form action="{% url 'changeBooking' %}" method="post">
+		{% csrf_token %}
+        <label for="room-location">Room Name:</label>
+		<select name="room-name">
+			{% for room in rooms %}
+			{% if room.name == reservation.room.name %}
+            	<option value="{{ room.name }}" selected>{{ room.name }}</option>
+        	{% else %}
+            	<option value="{{ room.name }}">{{ room.name }}</option>
+       		{% endif %}
+				
+			{% endfor %}
+		</select>
+		<!-- <input type="text" id="room-name" name="room-name" value="{{reservation.room.name}}" required> -->
 
 		<label for="booking-date">Date</label>
-		<input type="date" id="booking-date" name="booking-date" required>
+		<input type="date" id="booking-date" name="booking-date" value="{{date}}" required>
 
-		<label for="start-time">Choose a New Time Slot:</label>
-        <select name="booking-timeslot" id="booking-timeslot"> 
-            <option value="t1">10am-11am</option> 
-            <option value="t2">11am-12pm</option> 
-            <option value="t3">12pm-1pm</option> 
-            <option value="t4">1pm-2pm</option> 
-        </select>
+		<label for="start-time">Start time: </label>
+        <input id="start-time" type="time" name="start-time" value="{{start_time}}" />
+        
+        <label for="end-time">End time: </label>
+        <input id="end-time" type="time" name="end-time" value="{{end_time}}" />
 
+		<input type="hidden" id="modType" name="modType" value="modify">
+		<input type="hidden" id="id" name="id" value="{{reservation.id}}">
         <div class="buttonGrp">
-            <button onClick="returnHome()">Back</button>
-            <button onClick="deleteBooking()">Delete</button>
-            <button >Submit</button>
+            <button type='button' onClick="returnHome()">Back</button>
+            <button type='submit' onClick="deleteBooking()">Delete</button>
+            <button type='submit' >Modify</button>
         </div>
 	</form>
 </body>

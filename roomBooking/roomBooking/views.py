@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from roomBooking.models import User, Reservation,Room
 from django.contrib.auth.decorators import login_required
-from .forms import make_booking
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime, timedelta
@@ -29,7 +28,6 @@ def login1(request):
         return render(request, 'registration/login.html')
         
 def student(request):
-    
     today = datetime.today()
     monday = today - timedelta(days=today.weekday())
     currentWeek = [{'day': monday + timedelta(days=i), 'month': (monday + timedelta(days=i)).strftime('%B'), 'dayOfWeek':(monday + timedelta(days=i)).strftime('%A') } for i in range(7)]
@@ -44,18 +42,17 @@ def student(request):
 def staff(request):
     rooms = Room.objects.all()
     context = {
-        'rooms': rooms
+        'rooms': rooms,
+        'user': request.user.name
     }
     return render(request, 'registration/staff.html', context)
 
 def staffModify(request):
-     #pass in more content
      room_name = request.POST.get('r_name')
-    #  room_name = request.GET.get('r_name')
-     print(room_name)
      room = get_object_or_404(Room, pk=room_name)
      context = {
-        'room': room
+        'room': room,
+        'user': request.user.name
     }
      return render(request, 'registration/staff_modify.html', context)
 def home(request):
@@ -66,16 +63,12 @@ def home(request):
         return render(request,'registration/staff.html')
 
 def makeBooking(request):
-    #  if request.method == 'POST':
-    #       form = make_booking( request.POST)
+    context = {
+        'user':request.user,
+        'rooms': Room.objects.all()
+    }
 
-    #       if form.is_valid():
-    #            print(form.cleaned_data)
-    #            return redirect(reverse('student'))
-
-    #  else:
-    #       form = make_booking()
-     return render(request, 'registration/makeBooking.html', context={'user':request.user})
+    return render(request, 'registration/makeBooking.html', context=context)
 
 @login_required
 def student_bookings(request):
@@ -85,8 +78,28 @@ def student_bookings(request):
 
 def payment(request):
      if request.method == 'POST':
-          return render(request, 'registration/payment.html')
-     
+          room = get_object_or_404(Room, name=request.POST.get('room-name'))
+          price = room.price
+          print("hello", request.POST.get('date'))
+          context = {
+               'price': price,
+               'room': request.POST.get('room-name'),
+               'date': request.POST.get('date'),
+               'start_time':request.POST.get('start-time'),
+               'end_time':request.POST.get('end-time'),
+          }
+          return render(request, 'registration/payment.html', context=context)
+
+def success(request):
+      if request.method == 'POST':
+           room = get_object_or_404(Room, name=request.POST.get('room-name'))
+           date = request.POST.get('date')
+           start_time = request.POST.get('start-time')
+           end_time = request.POST.get('end-time')  
+           reservation = Reservation(user=request.user, room=room, time_slot=start_time,end_time= end_time, date=datetime.strptime(date, "%Y-%m-%d"))
+           reservation.save()
+           return redirect('student_bookings')
+
 
 def roomModify(request):
      room = get_object_or_404(Room, name=request.POST.get('room-name'))
@@ -101,6 +114,29 @@ def roomModify(request):
         return redirect('staff')
      
 
+def changeBooking(request):
+     reservation = get_object_or_404(Reservation, id=request.POST.get('id'))
+     if request.POST.get('modType') == 'modify':
+          reservation.room = get_object_or_404(Room, name=request.POST.get('room-name'))
+          reservation.date = request.POST.get('booking-date')
+          reservation.time_slot = request.POST.get('start-time')
+          reservation.end_time = request.POST.get('end-time')
+          reservation.save()
+          return redirect('student_bookings')
+     else:
+        reservation.delete()
+        return redirect('student_bookings')
+     
+
 def modify_booking(request):
      reservation = get_object_or_404(Reservation, id=request.POST.get('id'))
-     return  render(request, 'registration/student_modifyBooking.html')
+     date = reservation.date.strftime('%Y-%m-%d')
+     context = {
+          'reservation': reservation,
+          'user': request.user,
+          'date': date,
+          'rooms': Room.objects.all(),
+          'start_time': reservation.time_slot.strftime('%H:%M'),
+          'end_time': reservation.end_time.strftime('%H:%M')
+     }
+     return  render(request, 'registration/student_modifyBooking.html', context=context)

@@ -1,0 +1,168 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  align-items: center;
+  justify-content: center;
+  padding: 30px 10px;
+  font-family: Montserrat,Verdana,Geneva,sans-serif;
+}
+
+#header {
+    margin: 0px 300px;
+    height: 180px;
+    width: auto;
+}
+
+#title-display {
+    background-color: #001641;
+}
+
+#room-booking {
+    margin: 0px 336px;
+    font-size: 5.625rem;
+    line-height: 1;
+    font-weight: 300;
+    font-family: 'Chronicle Display A',
+        'Chronicle Display B', 
+        'Times New Roman', 
+        Times,
+        serif;
+    color: white;
+}
+
+.time {
+  text-align: left;
+}
+
+input[type=radio] {
+  display: none;
+}
+
+table {
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+td {
+  text-align: center; 
+  vertical-align: middle;
+  padding: 0; 
+  margin: 0;
+}
+
+.dayOfWeek {
+  background-color: #c3c3c3;
+  border: 1px solid black;
+}
+
+.time-list {
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  padding: 0px 10px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+#legend-end {
+  border-right: 1px solid black;
+}
+
+#list-end {
+  border-bottom: 1px solid black;
+}
+
+td a {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: orange;
+    font-size: 0.8rem;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+#cal-logo {
+  background-color: #444;
+  border: 1px solid black;
+}
+
+#calendar {
+  width: 30px;
+  height: auto;
+  border-radius: 0px;
+}
+
+.slide {
+  position: absolute;
+  width: 90%;
+  height: 95%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transition: transform 1.2s ease;
+  cursor: pointer;
+}
+
+.contain {
+  width: 100%;
+  max-width: 800px;
+  max-height: 600px;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
+.cards {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 20px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#room-1:checked ~ .cards #song-3, #room-2:checked ~ .cards #song-1, #room-3:checked ~ .cards #song-2 {
+  transform: translatex(-40%) scale(0.8);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+#room-1:checked ~ .cards #song-2, #room-2:checked ~ .cards #song-3, #room-3:checked ~ .cards #song-1 {
+  transform: translatex(40%) scale(0.8);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+#room-1:checked ~ .cards #song-1, #room-2:checked ~ .cards #song-2, #room-3:checked ~ .cards #song-3 {
+  transform: translatex(0) scale(1);
+  opacity: 1;
+  z-index: 1;
+}
+#room-1:checked ~ .cards #song-1 img, #room-2:checked ~ .cards #song-2 img, #room-3:checked ~ .cards #song-3 img {
+  box-shadow: 0px 0px 5px 0px rgba(81, 81, 81, 0.47);
+}

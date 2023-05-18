@@ -1,59 +1,128 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookings</title>
-    <style>
+    <link rel="stylesheet" href="{% static 'css/nav-style.css' %}">
+	<title>Top Horizontal Menu Bar</title>
+    <script>
+        
+    </script>
+	<style>
+
         body {
-            font-family: sans-serif;
-            text-align: center;
-        }
-        table {
             margin: 0 auto;
-            border-collapse: collapse;
+            width: 800px;
         }
+
+        .room-bar {
+            font-family: Arial;
+			display:flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 50px;
+        }
+
+        .room-list {
+            width: 100%;
+            font-family: Arial;
+            display:inline-flex;
+        }
+
+        .room-table {
+            width: 100%;
+			border-collapse:collapse;
+        }
+
         th, td {
-            /* border-bottom: 1px solid #ddd; */
-            border: 1px solid black;
-            padding: 15px;
+            border: 2px solid;
             text-align: center;
-	        vertical-align: middle;
+            align-items: center;
         }
 
-        caption {
-            font-weight: bold;
-            font-size: 20px;
-            /* text-align: left; */
-            color: #244971;
-            margin-bottom: 16px;
+
+        td {
+            height: 100px;
+
         }
 
-    </style>
+        #Rooms {
+            width:40%;
+        }
+
+        #Locations {
+            width: 20%;
+        }
+
+        #Capacity {
+            width: 20%
+        }
+        #Price {
+            width: 10%;
+        }
+
+        #Status {
+            width: 10%;
+        }
+
+        button {
+            width: 55px;
+        }
+	</style>
 </head>
 <body>
-    <table>
-        <caption>List of bookings made by user</caption>
-        <thead>
+    <nav>
+        <div class="logo-container">
+            <img src="{% static 'images/uowlogo.png' %}" alt="logo">
+        </div>
+        <div class="navigation-container">
+          <ul>
+            <li>{{user}}</li>
+            <li><a href="{% url 'login' %}">Logout</a></li>
+          </ul>
+        </div>
+    </nav>
+
+    <div class="room-bar">
+        <h1>My Bookings</h1>
+        <button onclick="newBooking()">Add</button>
+    </div>
+
+    
+    <div class="room-list">
+        <table class ="room-table">
             <tr>
-                <th>Room name</th>
-                <th>Location</th>
-                <th>Date</th>
-                <th>Time slot</th>
+                <th id="Rooms">Room</td>
+                <th id="Locations">Location</td>
+                <th id="Date">Date</th>
+                <th id="Time">Time</th>
+                <th id="Options">Options</th>
             </tr>
-        </thead>
-        <tbody>
             {% for booking in bookings %}
+            {% if booking.room.is_available %}
             <tr>
                 <td>{{ booking.room.name }}</td>
                 <td>{{booking.room.location}}</td>
                 <td>{{ booking.date }}</td>
                 <td>{{ booking.time_slot }} - {{ booking.end_time }}</td>
+                <td>
+                    <form id="myForm{{ booking.id }}" action="{% url 'modify_booking' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ booking.id }}">
+                        <input type="hidden" name="r_name" value="{{ booking.room.name }}">
+                        <input type="hidden" name="time" value="{{ booking.room.time_slot }}">
+                        <input type="hidden" name="date" value="{{ booking.room.date }}">
+                        <button type="submit">Edit</button>
+                    </form>
+                </td>
             </tr>
+            {% endif %}
             {% endfor %}
-        </tbody>
-      </table>
-     
+        </table>
+    </div>
+   <script>
+    function newBooking() {
+			window.location.href = "{% url 'makeBooking' %}";
+		}
+   </script>
 </body>
 </html>

@@ -1,9 +1,171 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+	<title>Top Horizontal Menu Bar</title>
+    
+    <link rel="stylesheet" href="{% static 'css/nav-style.css' %}">
+	<style>
+        body {
+            margin: 0 auto;
+            width: 800px;
+        }
+
+        .room-bar {
+            font-family: Arial;
+			display:flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 50px;
+        }
+
+        .room-list {
+            width: 100%;
+            font-family: Arial;
+            display:inline-flex;
+        }
+
+        .room-table {
+            width: 100%;
+			border-collapse:collapse;
+        }
+
+        th, td {
+            border: 2px solid;
+            text-align: center;
+            align-items: center;
+        }
+
+
+        td {
+            height: 100px;
+
+        }
+
+        #Rooms {
+            width:40%;
+        }
+
+        #Locations {
+            width: 20%;
+        }
+
+        #Capacity {
+            width: 20%
+        }
+        #Price {
+            width: 10%;
+        }
+
+        #Status {
+            width: 10%;
+        }
+
+        button {
+            width: 55px;
+        }
+
+        .offline{
+            background-color: rosybrown;
+        }
+
+        .online{
+            background-color: rgb(159, 228, 159);
+        }
+	</style>
 </head>
 <body>
-    <h1>Welcome Staff</h1>
+    <nav>
+        <div class="logo-container">
+            <img src="{% static 'images/uowlogo.png' %}" alt="logo">
+        </div>
+        <div class="navigation-container">
+          <ul>
+            <li>{{user}}</li>
+            <li><a href="{% url 'login' %}">Logout</a></li>
+          </ul>
+        </div>
+    </nav>
+
+    <div class="room-bar">
+        <h1>Rooms</h1>
+        <button onclick="newRoom()">Add Room</button>
+    </div>
+
+    <div class="room-list">
+        <table class ="room-table">
+            <tr>
+                <th id="Rooms">Room</td>
+                <th id="Locations">Location</td>
+                <th id="Capacity">Capacity</th>
+                <th id="Price">Price</td>
+                <th id="Status">Status</td>
+            </tr>
+
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room.name }}</td>
+                <td>{{room.location}}</td>
+                <td>{{ room.capacity }}</td>
+                <td>${{ room.price }}</td>
+                <td>
+    
+    
+                    <form id="myForm{{ room.name }}" class="myForm" action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="r_name" value="{{ room.name }}">
+                        {% if room.is_available %}
+                            <button type='submit' id="{{room.name}}" class="roomLaunch online" >Online</button>
+                        {% else %}
+                            <button type='submit' id="{{room.name}}" class="roomLaunch offline" >Offline</button>
+                        {% endif %}
+                        <button type="submit" value="Edit">Edit</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <script>
+
+    var forms = document.getElementsByClassName('myForm');
+    for (var i = 0; i < forms.length; i++) {
+        forms[i].addEventListener('submit', function(event) {
+            var submitButtonValue = event.submitter.value;
+            console.log(submitButtonValue)
+            if (submitButtonValue === 'Edit') {
+              
+                    this.action = "{% url 'staff_modify' %}";
+                
+            } else {
+                
+                    this.action = "{% url 'activateRoom' %}";
+            }
+        });
+    }
+
+        var roomLaunchStatus = document.getElementsByClassName("roomLaunch");
+
+        for (var i = 0; i < roomLaunchStatus.length; i++) {
+            roomLaunchStatus[i].addEventListener("click", function() {
+                var room = this;
+                if(room.textContent == "Online") {
+                    room.classList.remove("online")
+                    room.classList.add("offline")
+                    room.textContent = "Offline"
+                }
+                else{
+                    room.classList.remove("offline")
+                    room.classList.add("online")
+                    room.textContent ="Online"
+                }
+            });
+        }
+
+        function newRoom() {
+			window.location.href = "{% url 'createRoom' %}";
+		}
+
+    </script>
 </body>
 </html>

@@ -1,10 +1,144 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en" >
 <head>
-    <title>Home</title>
+  <meta charset="UTF-8">
+  <title>Calendar</title>
+<link rel="stylesheet" href="{% static 'css/nav-style.css' %}">
+<link rel="stylesheet" href="{%  static 'css/calendar-style.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
 </head>
 <body>
-    <h1>Welcome student</h1>
-    <a href="{% url 'student_bookings' %}">View Bookings</a>
+   <!--UOW LOGO-->
+   <nav>
+    <div class="logo-container">
+        <img src="{% static 'images/uowlogo.png' %}" alt="logo">
+    </div>
+    <div class="navigation-container">
+      <ul>
+        <li>{{user}}</li>
+        <li><a href="{% url 'student_bookings' %}">My Bookings</a></li>
+        <li><a href="{% url 'login' %}">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!--ROOM BOOKING TITLE-->
+  <div id="title-display">
+      <h1 id="room-booking">Room <br/> Booking</h1>
+  </div>
+  <!--ROOM CAROUSEL-->
+  <div class="contain">
+      <input type="radio" name="slider" id="room-1" checked>
+      <input type="radio" name="slider" id="room-2">
+      <input type="radio" name="slider" id="room-3">
+    <div class="cards">
+      <label class="slide" for="room-1" id="song-1">
+        <img src="{% static 'images/room-1.jpg' %}" alt="room-1">
+      </label>
+      <label class="slide" for="room-2" id="song-2">
+        <img src="{% static 'images/room-2.jpg' %}" alt="room-2">
+      </label>
+      <label class="slide" for="room-3" id="song-3">
+        <img src="{% static 'images/room-3.jpg' %}" alt="room-3">
+      </label>
+    </div>
+  </div>
+  <!--CALENDAR-->
+  <table>
+    <tr>
+      <td id="cal-logo"> <img id="calendar" src="{% static 'images/calendar-logo.png' %}" alt="calendar-logo"> </td>
+      {% for day in week %}
+         <td class="dayOfWeek"> {{day.dayOfWeek}} <br> {{day.day.day}} {{day.month}} </td> 
+      {% endfor %}
+    </tr>
+    
+    <tr>
+      <td class="time-list"></td>
+      <td colspan="7" id="legend-end"> Insert Legends here </td>
+    </tr>
+    
+
+    <tr> <td class="align-top time-list"> 08:00 </td>
+      <td class="time"> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+    </tr>
+    <tr> <td class="align-top time-list"> 10:00 </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+    </tr>
+    <tr> <td class="align-top time-list"> 12:00 </td> 
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+    </tr>
+    <tr> <td class="align-top time-list"> 14:00 </td> 
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+    </tr>
+    <tr> <td class="align-top time-list"> 16:00 </td> 
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+    </tr>
+    <tr> <td class="align-top time-list"> 18:00 </td>  
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+    </tr>
+    <tr> <td class="align-top time-list"> 20:00 </td> 
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+    </tr>
+    <tr> <td id="list-end" class="align-top time-list"> 22:00 </td> 
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+      <td> <a href="{% url 'makeBooking' %}"></a> </td>
+    </tr>
+  </table>
+
+   <script>
+        window.onload = function() {
+        console.log('window.onload alert');
+    }
+    console.log('inline alert');
+   </script>
+
 </body>
 </html>

@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Modify Room Booking</title>
+	<link rel="stylesheet" href="{% static 'css/nav-style.css' %}">
+	<style>
+        body {
+            margin: 0 auto;
+            width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 50px;
+		}
+
+		form > input, select {
+			margin-bottom: 20px;
+			padding: 10px;
+			width: 300px;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+		}
+
+		label {
+			display: inline-block;
+			width: 300px;
+			text-align: left;
+			margin-right: 20px;
+		}
+
+
+		button {
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+			cursor: pointer;
+			font-size: 16px;
+			font-weight: bold;
+			transition: background-color 0.3s ease-in-out;
+		}
+
+		button:hover {
+			background-color: #0062cc;
+		}
+	</style>
+	<script>
+		function returnHome() {
+			window.location.href = "{% url 'student_bookings' %}";
+		}
+
+		function deleteBooking() {
+			var response = confirm("Are you sure you want to delete this booking?");
+
+			if (response == true) {
+				document.getElementById( "modType" ).value = "delete";
+				alert('Deleted Room');
+				return true;
+			} 
+			return false;
+		}
+	</script>
+</head>
+<body>
+	<nav>
+        <div class="logo-container">
+            <img src="{% static 'images/uowlogo.png' %}" alt="logo">
+        </div>
+        <div class="navigation-container">
+          <ul>
+            <li>{{user}}</li>
+            <li><a href="{% url 'login' %}">Logout</a></li>
+          </ul>
+        </div>
+    </nav>
+
+    <h1>Modify Booking Page</h1>
+	<form action="{% url 'changeBooking' %}" method="post">
+		{% csrf_token %}
+        <label for="room-location">Room Name:</label>
+		<select name="room-name">
+			{% for room in rooms %}
+			{% if room.is_available %}
+				{% if room.name == reservation.room.name %}
+					<option value="{{ room.name }}" selected>{{ room.name }}</option>
+				{% else %}
+					<option value="{{ room.name }}">{{ room.name }}</option>
+       			{% endif %}
+			{% endif %}
+				
+			{% endfor %}
+		</select>
+		<!-- <input type="text" id="room-name" name="room-name" value="{{reservation.room.name}}" required> -->
+
+		<label for="booking-date">Date</label>
+		<input type="date" id="booking-date" name="booking-date" value="{{date}}" required>
+
+		<label for="start-time">Start time: </label>
+        <input id="start-time" type="time" name="start-time" value="{{start_time}}" />
+        
+        <label for="end-time">End time: </label>
+        <input id="end-time" type="time" name="end-time" value="{{end_time}}" />
+
+		<input type="hidden" id="modType" name="modType" value="modify">
+		<input type="hidden" id="id" name="id" value="{{reservation.id}}">
+        <div class="buttonGrp">
+            <button type='button' onClick="returnHome()">Back</button>
+            <button type='submit' onClick="deleteBooking()">Delete</button>
+            <button type='submit' >Modify</button>
+        </div>
+	</form>
+</body>
+</html>

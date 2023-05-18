@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Room Reservation Form</title>
+	<link rel="stylesheet" href="{% static 'css/nav-style.css' %}">
+	<style>
+		 body {
+            margin: 0 auto;
+            width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 50px;
+		}
+
+		form > input, select {
+			margin-bottom: 20px;
+			padding: 10px;
+			width: 300px;
+			border-radius: 5px;
+			border: none;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+		}
+
+		label {
+			display: inline-block;
+			width: 300px;
+			text-align: left;
+			margin-right: 20px;
+		}
+
+
+		button {
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+			cursor: pointer;
+			font-size: 16px;
+			font-weight: bold;
+			transition: background-color 0.3s ease-in-out;
+		}
+
+		button:hover {
+			background-color: #0062cc;
+		}
+	</style>
+	<script>
+		function returnHome() {
+			window.location.href = "/staff/";
+		}
+		
+		function validateForm() {
+			const capacityInput = document.getElementById('room-capacity');
+			const capacityErrorMessage = document.getElementById('capacity-error-message');
+			const priceInput = document.getElementById('price-per-hour');
+			const priceErrorMessage = document.getElementById('price-error-message');
+			let isValid = true;
+
+			if (capacityInput.value <= 0) {
+				capacityErrorMessage.innerText = 'Please enter a positive number';
+				isValid = false;
+			} else {
+				capacityErrorMessage.innerText = '';
+			}
+
+			if (priceInput.value <= 0) {
+				priceErrorMessage.innerText = 'Please enter a positive number';
+				isValid = false;
+			} else {
+				priceErrorMessage.innerText = '';
+			}
+
+			return isValid;
+		}
+
+	</script>
+</head>
+<body>
+	<nav>
+        <div class="logo-container">
+            <img src="{% static 'images/uowlogo.png' %}" alt="logo">
+        </div>
+        <div class="navigation-container">
+          <ul>
+            <li>{{user}}</li>
+            <li><a href="{% url 'login' %}">Logout</a></li>
+          </ul>
+        </div>
+    </nav>
+    <h1>Create Room Page</h1>
+	<form action="{% url 'ConfirmCreateRoom' %}" method="post" onsubmit="return validateForm()">
+		
+		{% csrf_token %}
+			
+		<label for="room-name">Room Name:</label>
+		<input type="text" id="room-name" name="room-name" required>
+
+		<label for="room-location">Room Location:</label>
+		<input type="text" id="room-location" name="room-location" required>
+
+		<label for="room-capacity">Room Capacity:</label>
+		<input type="number" id="room-capacity" name="room-capacity" min="0" required>
+		<span id="capacity-error-message" class="error-message"></span>
+
+		<label for="room-promotion-code">Room Promotion Code:</label>
+		<input type="text" id="room-promotion-code" name="room-promotion-code">
+
+		<label for="price-per-hour">Price Per Hour:</label>
+		<input type="number" id="price-per-hour" name="price-per-hour" min="0" required>
+		<span id="price-error-message" class="error-message"></span>
+
+		<label for="start-time">Start Time:</label>
+		<input type="time" id="start-time" min="07:00" max="22:00" name="appt-time" name="start-time" required>
+
+		<label for="end-time">End Time:</label>
+		<input type="time" id="end-time" min="07:00" max="22:00" name="appt-time" name="end-time" required>
+
+		<div class="checkbox-group">
+			<label>Day Available:</label><br/>
+			<input type="checkbox" id="monday" name="day-available" value="monday">Monday</input><br/>
+			<input type="checkbox" id="tuesday" name="day-available" value="tuesday">Tuesday</input><br/>
+			<input type="checkbox" id="wednesday" name="day-available" value="wednesday">Wednesday</input><br/>
+			<input type="checkbox" id="thursday" name="day-available" value="thursday">Thursday</input><br/>
+            <input type="checkbox" id="Friday" name="day-available" value="Friday">Friday</input><br/>
+            <input type="checkbox" id="Saturday" name="day-available" value="Saturday">Saturday</input><br/>
+            <input type="checkbox" id="Sunday" name="day-available" value="Sunday">Sunday</input><br/>
+        </div>
+        <br/><br/>
+
+        <div class="buttonGrp">
+            <button type="button" onclick="returnHome()">Back</button>
+            <button type="submit" >Create</button>
+        </div>
+	</form>
+</body>
+</html>

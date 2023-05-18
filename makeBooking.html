@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/nav-style.css' %}">
+    <style>
+    body {
+        margin: 0 auto;
+        width: 800px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    form > input, select {
+        margin-bottom: 20px;
+        padding: 10px;
+        width: 300px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    label {
+        display: inline-block;
+        width: 300px;
+        text-align: left;
+        margin-right: 20px;
+    }
+
+
+    button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    button:hover {
+        background-color: #0062cc;
+    }
+    </style>
+<script>
+        function validatePromoCode() {
+            var promoCodeInput = document.getElementById('promocode');
+            var promoCodeValue = promoCodeInput.value.trim();
+            var promoMessageElement = document.getElementById('promoMessage');
+
+            if (promoCodeValue !== '789JKL321' && promoCodeValue !== '789jkl321') {
+                promoMessageElement.textContent = 'Invalid promo code';
+                promoMessageElement.style.color = 'red';
+            } else {
+                promoMessageElement.textContent = '';
+            }
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <div class="logo-container">
+            <img src="{% static 'images/uowlogo.png' %}" alt="logo">
+        </div>
+        <div class="navigation-container">
+          <ul>
+            <li>{{user}}</li>
+            <li><a href="{% url 'login' %}">Logout</a></li>
+          </ul>
+        </div>
+    </nav>
+    <h1>Make booking</h1>
+    <form action="{% url 'payment' %}"method="POST">
+        {% csrf_token %}
+        <label for="student-name">Student Name:</label>
+		<input type="text" id="student-name" name="student-name" value="{{ user.name }}" required>
+        <br>
+        <label for="room-name">Room Name:</label>
+		<!-- <input type="text" id="room-name" name="room-name" value="B.4.10" required> -->
+        <select name="room-name">
+			{% for room in rooms %}
+                {% if room.is_available %}
+            	    <option value="{{ room.name }}">{{ room.name }}</option>
+                {% endif %}
+			{% endfor %}
+		</select>
+        <br>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" value="2023-08-01" />
+        <br>
+        <label for="start-time">Start time: </label>
+        <input id="start-time" type="time" name="start-time" value="13:30" />
+        <br>
+        <label for="end-time">End time: </label>
+        <input id="end-time" type="time" name="end-time" value="14:30" />
+        <br>
+        <label for="promocode">Promo code: </label>
+        <input id="promocode" type="text" name="promocode" onblur="validatePromoCode()" />
+        <br>
+        <span id="promoMessage"></span>
+	  <br>
+        <label for="description">Reason for booking:</label>
+        <br>
+        <textarea id="description" name="description" rows="4" cols="40"></textarea>
+        <br>
+        <input type="submit">
+    </form>
+</body>
+</html>

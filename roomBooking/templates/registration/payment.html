@@ -93,13 +93,14 @@
 			<br>
 		</div>
 		<label for="amount">Amount:</label>
-		<input type="number" id="amount" name="amount" min="1" placeholder="Enter amount" value="{{price}}">
+		<input type="number" id="amount" name="amount" min="1" placeholder="Enter amount" value="{{amount}}" disabled>
 		<br>
 
 	
 		<input type="hidden" id="room-name" name="room-name" value="{{room}}" required>
        
         <input type="hidden" id="date" name="date" value="{{date}}" />
+		<input type="hidden" id="price" name="price" value="{{price}}"/>
 
         <input id="start-time" type="hidden" name="start-time" value="{{start_time}}" />
     
@@ -176,6 +177,9 @@ function displayFields() {
 			alert("Payment details are incorrect. Please check and try again.");
 		}
 	}
+
+
+	
 
 </script>
 

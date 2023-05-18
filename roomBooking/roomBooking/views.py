@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime, timedelta
+from decimal import Decimal
 
 def login1(request):
     if request.method == 'POST':
@@ -80,13 +81,24 @@ def payment(request):
      if request.method == 'POST':
           room = get_object_or_404(Room, name=request.POST.get('room-name'))
           price = room.price
-          print("hello", request.POST.get('date'))
+          start_time = datetime.strptime(request.POST['start-time'], '%H:%M').time()
+          end_time = datetime.strptime(request.POST['end-time'], '%H:%M').time()
+
+            # Calculate the duration
+          duration = datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)
+
+            # Access the duration in hours
+          duration_hours = duration.total_seconds() / 3600
+
+          amount = price * Decimal(duration_hours)
+          print(amount)
           context = {
                'price': price,
                'room': request.POST.get('room-name'),
                'date': request.POST.get('date'),
                'start_time':request.POST.get('start-time'),
                'end_time':request.POST.get('end-time'),
+               'amount': amount
           }
           return render(request, 'registration/payment.html', context=context)
 
@@ -96,7 +108,8 @@ def success(request):
            date = request.POST.get('date')
            start_time = request.POST.get('start-time')
            end_time = request.POST.get('end-time')  
-           reservation = Reservation(user=request.user, room=room, time_slot=start_time,end_time= end_time, date=datetime.strptime(date, "%Y-%m-%d"))
+           price = Decimal(request.POST.get('price'))
+           reservation = Reservation(user=request.user, room=room, time_slot=start_time,end_time= end_time, date=datetime.strptime(date, "%Y-%m-%d"), price=price)
            reservation.save()
            return redirect('student_bookings')
 

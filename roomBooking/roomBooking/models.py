@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 from django.db import models
 from datetime import datetime, timedelta
+from django.db.models import JSONField
 
 class Room(models.Model):
     name = models.CharField(max_length=50, primary_key=True)
@@ -10,6 +11,7 @@ class Room(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     promotional_codes = models.CharField(max_length=50, blank=True, null=True)
     is_available = models.BooleanField(default=True)
+    availability = JSONField(default=dict)
 
     def __str__(self):
         return self.name

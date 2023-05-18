@@ -122,6 +122,14 @@ def roomModify(request):
           room.capacity = request.POST.get('room-capacity')
           room.price = request.POST.get('price-per-hour')
           room.promotional_codes = request.POST.get('room-promotion-code')
+          days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+          # availability = {}
+
+          for day in days:
+               room.availability[day] = day.lower() in request.POST
+               print('helllfdskjl')
+               print(day)
+               print(day.lower() in request.POST)
           room.save()
           return redirect('staff')
      else:
@@ -163,7 +171,18 @@ def confirmCreateRoom(request):
           capacity = request.POST.get('room-capacity')
           price = request.POST.get('price-per-hour')
           promo = request.POST.get('room-promotion-code')
-          room = Room(name=name, location=location, capacity=capacity, price=price, is_available=False, promotional_codes=promo)
+          
+          days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+          availability = {}
+
+          for day in days:
+               availability[day] = day.lower() in request.POST
+               print(day)
+               print(day.lower() in request.POST)
+
+          # availability['Monday'] = 'monday' in request.POST
+          
+          room = Room(name=name, location=location, capacity=capacity, price=price, is_available=False, promotional_codes=promo, availability= availability)
           room.save()
           return redirect('staff')
      

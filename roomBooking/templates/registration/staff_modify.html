@@ -117,13 +117,13 @@
 
 		<div class="checkbox-group">
 			<label>Day Available:</label><br/>
-			<input type="checkbox" id="monday" name="day-available" value="monday" checked>Monday</input><br/>
-			<input type="checkbox" id="tuesday" name="day-available" value="tuesday">Tuesday</input><br/>
-			<input type="checkbox" id="wednesday" name="day-available" value="wednesday" checked>Wednesday</input><br/>
-			<input type="checkbox" id="thursday" name="day-available" value="thursday">Thursday</input><br/>
-            <input type="checkbox" id="Friday" name="day-available" value="Friday">Friday</input><br/>
-            <input type="checkbox" id="Saturday" name="day-available" value="Saturday">Saturday</input><br/>
-            <input type="checkbox" id="Sunday" name="day-available" value="Sunday">Sunday</input><br/>
+			<input type="checkbox" id="monday" name="monday" value="monday" {% if room.availability.Monday|default:'' %}checked{% endif %}>Monday</input><br/>
+			<input type="checkbox" id="tuesday" name="tuesday" value="tuesday"{% if room.availability.Tuesday|default:'' %}checked{% endif %}>Tuesday</input><br/>
+			<input type="checkbox" id="wednesday" name="wednesday" value="wednesday" {% if room.availability.Wednesday|default:'' %}checked{% endif %}>Wednesday</input><br/>
+			<input type="checkbox" id="thursday" name="thursday" value="thursday" {% if room.availability.Thursday|default:'' %}checked{% endif %}>Thursday</input><br/>
+            <input type="checkbox" id="Friday" name="friday" value="Friday"{% if room.availability.Friday|default:'' %}checked{% endif %}>Friday</input><br/>
+            <input type="checkbox" id="Saturday" name="saturday" value="Saturday"{% if room.availability.Saturday|default:'' %}checked{% endif %}>Saturday</input><br/>
+            <input type="checkbox" id="Sunday" name="sunday" value="Sunday"{% if room.availability.Sunday|default:'' %}checked{% endif %}>Sunday</input><br/>
         </div>
         <br/><br/>
 

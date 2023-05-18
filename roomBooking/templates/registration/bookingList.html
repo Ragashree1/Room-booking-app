@@ -98,6 +98,7 @@
                 <th id="Options">Options</th>
             </tr>
             {% for booking in bookings %}
+            {% if booking.room.is_available %}
             <tr>
                 <td>{{ booking.room.name }}</td>
                 <td>{{booking.room.location}}</td>
@@ -114,6 +115,7 @@
                     </form>
                 </td>
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
     </div>

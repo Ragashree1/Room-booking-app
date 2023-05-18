@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
 from datetime import datetime, timedelta
+from decimal import Decimal
 
 def login1(request):
     if request.method == 'POST':
@@ -56,7 +57,6 @@ def staffModify(request):
     }
      return render(request, 'registration/staff_modify.html', context)
 def home(request):
-    #  login(request, request.user)
      if request.user.user_type == 'S':
                 return render(request,'registration/student.html')
      else:
@@ -80,13 +80,26 @@ def payment(request):
      if request.method == 'POST':
           room = get_object_or_404(Room, name=request.POST.get('room-name'))
           price = room.price
-          print("hello", request.POST.get('date'))
+          start_time = datetime.strptime(request.POST['start-time'], '%H:%M').time()
+          end_time = datetime.strptime(request.POST['end-time'], '%H:%M').time()
+
+            # Calculate the duration
+          duration = datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)
+
+            # Access the duration in hours
+          duration_hours = duration.total_seconds() / 3600
+
+          amount = price * Decimal(duration_hours)
+          if room.promotional_codes is not None and room.promotional_codes != '':
+               if request.POST.get('promocode') == room.promotional_codes:
+                    amount = amount * Decimal(0.75)
           context = {
                'price': price,
                'room': request.POST.get('room-name'),
                'date': request.POST.get('date'),
                'start_time':request.POST.get('start-time'),
                'end_time':request.POST.get('end-time'),
+               'amount': amount,
           }
           return render(request, 'registration/payment.html', context=context)
 
@@ -96,6 +109,7 @@ def success(request):
            date = request.POST.get('date')
            start_time = request.POST.get('start-time')
            end_time = request.POST.get('end-time')  
+          #  price = Decimal(request.POST.get('price'))
            reservation = Reservation(user=request.user, room=room, time_slot=start_time,end_time= end_time, date=datetime.strptime(date, "%Y-%m-%d"))
            reservation.save()
            return redirect('student_bookings')
@@ -107,6 +121,7 @@ def roomModify(request):
           room.location = request.POST.get('room-location')
           room.capacity = request.POST.get('room-capacity')
           room.price = request.POST.get('price-per-hour')
+          room.promotional_codes = request.POST.get('room-promotion-code')
           room.save()
           return redirect('staff')
      else:
@@ -147,7 +162,8 @@ def confirmCreateRoom(request):
           location = request.POST.get('room-location')
           capacity = request.POST.get('room-capacity')
           price = request.POST.get('price-per-hour')
-          room = Room(name=name, location=location, capacity=capacity, price=price)
+          promo = request.POST.get('room-promotion-code')
+          room = Room(name=name, location=location, capacity=capacity, price=price, is_available=False, promotional_codes=promo)
           room.save()
           return redirect('staff')
      
@@ -157,3 +173,13 @@ def createRoom(request):
         'user':request.user
       }
       return render(request, 'registration/createRoom.html', context=context)
+
+def activateRoom(request):
+     if request.method == "POST":
+          room = get_object_or_404(Room, name=request.POST.get('r_name'))
+          if room.is_available:
+               room.is_available = False;
+          else:
+               room.is_available = True;
+          room.save()
+          return redirect('staff')

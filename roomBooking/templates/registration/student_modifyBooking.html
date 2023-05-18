@@ -91,11 +91,13 @@
         <label for="room-location">Room Name:</label>
 		<select name="room-name">
 			{% for room in rooms %}
-			{% if room.name == reservation.room.name %}
-            	<option value="{{ room.name }}" selected>{{ room.name }}</option>
-        	{% else %}
-            	<option value="{{ room.name }}">{{ room.name }}</option>
-       		{% endif %}
+			{% if room.is_available %}
+				{% if room.name == reservation.room.name %}
+					<option value="{{ room.name }}" selected>{{ room.name }}</option>
+				{% else %}
+					<option value="{{ room.name }}">{{ room.name }}</option>
+       			{% endif %}
+			{% endif %}
 				
 			{% endfor %}
 		</select>

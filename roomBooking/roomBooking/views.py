@@ -57,7 +57,6 @@ def staffModify(request):
     }
      return render(request, 'registration/staff_modify.html', context)
 def home(request):
-    #  login(request, request.user)
      if request.user.user_type == 'S':
                 return render(request,'registration/student.html')
      else:
@@ -91,14 +90,16 @@ def payment(request):
           duration_hours = duration.total_seconds() / 3600
 
           amount = price * Decimal(duration_hours)
-          print(amount)
+          if room.promotional_codes is not None and room.promotional_codes != '':
+               if request.POST.get('promocode') == room.promotional_codes:
+                    amount = amount * Decimal(0.75)
           context = {
                'price': price,
                'room': request.POST.get('room-name'),
                'date': request.POST.get('date'),
                'start_time':request.POST.get('start-time'),
                'end_time':request.POST.get('end-time'),
-               'amount': amount
+               'amount': amount,
           }
           return render(request, 'registration/payment.html', context=context)
 
@@ -108,8 +109,8 @@ def success(request):
            date = request.POST.get('date')
            start_time = request.POST.get('start-time')
            end_time = request.POST.get('end-time')  
-           price = Decimal(request.POST.get('price'))
-           reservation = Reservation(user=request.user, room=room, time_slot=start_time,end_time= end_time, date=datetime.strptime(date, "%Y-%m-%d"), price=price)
+          #  price = Decimal(request.POST.get('price'))
+           reservation = Reservation(user=request.user, room=room, time_slot=start_time,end_time= end_time, date=datetime.strptime(date, "%Y-%m-%d"))
            reservation.save()
            return redirect('student_bookings')
 
@@ -120,6 +121,7 @@ def roomModify(request):
           room.location = request.POST.get('room-location')
           room.capacity = request.POST.get('room-capacity')
           room.price = request.POST.get('price-per-hour')
+          room.promotional_codes = request.POST.get('room-promotion-code')
           room.save()
           return redirect('staff')
      else:
@@ -160,7 +162,8 @@ def confirmCreateRoom(request):
           location = request.POST.get('room-location')
           capacity = request.POST.get('room-capacity')
           price = request.POST.get('price-per-hour')
-          room = Room(name=name, location=location, capacity=capacity, price=price, is_available=False)
+          promo = request.POST.get('room-promotion-code')
+          room = Room(name=name, location=location, capacity=capacity, price=price, is_available=False, promotional_codes=promo)
           room.save()
           return redirect('staff')
      

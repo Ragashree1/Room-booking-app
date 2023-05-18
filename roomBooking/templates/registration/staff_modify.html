@@ -99,7 +99,12 @@
 		<input type="number" id="room-capacity" name="room-capacity" value="{{room.capacity}}" required>
 
 		<label for="room-promotion-code">Room Promotion Code:</label>
+
+		{% if room.promotional_codes|length == 0 %}
 		<input type="text" id="room-promotion-code" name="room-promotion-code">
+		{% else %}
+		<input type="text" id="room-promotion-code" name="room-promotion-code" value="{{room.promotional_codes}}">
+		{% endif %}
 
 		<label for="price-per-hour">Price Per Hour:</label>
 		<input type="number" id="price-per-hour" name="price-per-hour" value="{{room.price}}" required>

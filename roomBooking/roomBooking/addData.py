@@ -26,3 +26,7 @@ reservation.save()
 reservation2.save()
 reservation3.save()
 reservation4.save()
+
+
+#promo code default value
+#789JKL321

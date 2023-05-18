@@ -140,3 +140,20 @@ def modify_booking(request):
           'end_time': reservation.end_time.strftime('%H:%M')
      }
      return  render(request, 'registration/student_modifyBooking.html', context=context)
+
+def confirmCreateRoom(request):
+     if request.method == "POST":
+          name = request.POST.get('room-name')
+          location = request.POST.get('room-location')
+          capacity = request.POST.get('room-capacity')
+          price = request.POST.get('price-per-hour')
+          room = Room(name=name, location=location, capacity=capacity, price=price)
+          room.save()
+          return redirect('staff')
+     
+
+def createRoom(request):
+      context = {
+        'user':request.user
+      }
+      return render(request, 'registration/createRoom.html', context=context)

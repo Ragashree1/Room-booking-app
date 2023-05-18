@@ -89,7 +89,7 @@
 
     <div class="room-bar">
         <h1>Rooms</h1>
-        <button>Add Room</button>
+        <button onclick="newRoom()">Add Room</button>
     </div>
 
     <div class="room-list">
@@ -141,6 +141,10 @@
                 }
             });
         }
+
+        function newRoom() {
+			window.location.href = "{% url 'createRoom' %}";
+		}
 
     </script>
 </body>

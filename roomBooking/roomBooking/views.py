@@ -160,7 +160,7 @@ def confirmCreateRoom(request):
           location = request.POST.get('room-location')
           capacity = request.POST.get('room-capacity')
           price = request.POST.get('price-per-hour')
-          room = Room(name=name, location=location, capacity=capacity, price=price)
+          room = Room(name=name, location=location, capacity=capacity, price=price, is_available=False)
           room.save()
           return redirect('staff')
      
@@ -170,3 +170,13 @@ def createRoom(request):
         'user':request.user
       }
       return render(request, 'registration/createRoom.html', context=context)
+
+def activateRoom(request):
+     if request.method == "POST":
+          room = get_object_or_404(Room, name=request.POST.get('r_name'))
+          if room.is_available:
+               room.is_available = False;
+          else:
+               room.is_available = True;
+          room.save()
+          return redirect('staff')

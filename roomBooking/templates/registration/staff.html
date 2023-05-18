@@ -111,11 +111,15 @@
                 <td>
     
     
-                    <form id="myForm{{ room.name }}" action="{% url 'staff_modify' %}" method="post">
+                    <form id="myForm{{ room.name }}" class="myForm" action="" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="r_name" value="{{ room.name }}">
-                        <button type='button' id="{{room.name}}" class="roomLaunch online" >Online</button>
-                        <button type="submit">Edit</button>
+                        {% if room.is_available %}
+                            <button type='submit' id="{{room.name}}" class="roomLaunch online" >Online</button>
+                        {% else %}
+                            <button type='submit' id="{{room.name}}" class="roomLaunch offline" >Offline</button>
+                        {% endif %}
+                        <button type="submit" value="Edit">Edit</button>
                     </form>
                 </td>
             </tr>
@@ -123,6 +127,22 @@
         </table>
     </div>
     <script>
+
+    var forms = document.getElementsByClassName('myForm');
+    for (var i = 0; i < forms.length; i++) {
+        forms[i].addEventListener('submit', function(event) {
+            var submitButtonValue = event.submitter.value;
+            console.log(submitButtonValue)
+            if (submitButtonValue === 'Edit') {
+              
+                    this.action = "{% url 'staff_modify' %}";
+                
+            } else {
+                
+                    this.action = "{% url 'activateRoom' %}";
+            }
+        });
+    }
 
         var roomLaunchStatus = document.getElementsByClassName("roomLaunch");
 

@@ -82,7 +82,9 @@
 		<!-- <input type="text" id="room-name" name="room-name" value="B.4.10" required> -->
         <select name="room-name">
 			{% for room in rooms %}
-            	<option value="{{ room.name }}">{{ room.name }}</option>
+                {% if room.is_available %}
+            	    <option value="{{ room.name }}">{{ room.name }}</option>
+                {% endif %}
 			{% endfor %}
 		</select>
         <br>

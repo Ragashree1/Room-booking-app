@@ -1,0 +1,65 @@
+/* global style ended above */
+/* header navigation menu */
+body {
+    font-family: Montserrat,Verdana,Geneva,sans-serif;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+nav .logo-container {
+    max-width: 130px;
+}
+
+@media (min-width: 768px) {
+    nav .logo-container {
+        max-width: 300px;
+    }
+}
+
+nav img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    -o-object-fit: cover;
+       object-fit: cover;
+}
+
+nav .navigation-container {
+    width: 200%;
+}
+
+nav .navigation-container ul {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav .navigation-container ul li {
+    list-style: none;
+    padding: 10px;
+    margin: 5px;
+}
+
+nav .navigation-container ul li, ul li a {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 1000;
+    font-size: 1rem;
+    font-style: bold;
+    color: #000000;
+    padding: 10px 5px;
+    transition: all 0.9s ease-out;
+}
+
+nav .navigation-container ul li a:hover {
+    background-color: #37415c;
+    color: #E0413D;
+}
+

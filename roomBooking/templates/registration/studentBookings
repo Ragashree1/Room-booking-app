@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/nav-style.css' %}">
+	<title>Top Horizontal Menu Bar</title>
+    <script>
+        
+    </script>
+	<style>
+
+        body {
+            margin: 0 auto;
+            width: 800px;
+        }
+
+        .room-bar {
+            font-family: Arial;
+			display:flex;
+			align-items: center;
+			justify-content: space-between;
+			height: 50px;
+        }
+
+        .room-list {
+            width: 100%;
+            font-family: Arial;
+            display:inline-flex;
+        }
+
+        .room-table {
+            width: 100%;
+			border-collapse:collapse;
+        }
+
+        th, td {
+            border: 2px solid;
+            text-align: center;
+            align-items: center;
+        }
+
+
+        td {
+            height: 100px;
+
+        }
+
+        #Rooms {
+            width:40%;
+        }
+
+        #Locations {
+            width: 20%;
+        }
+
+        #Capacity {
+            width: 20%
+        }
+        #Price {
+            width: 10%;
+        }
+
+        #Status {
+            width: 10%;
+        }
+
+        button {
+            width: 55px;
+        }
+	</style>
+</head>
+<body>
+    <nav>
+        <div class="logo-container">
+            <img src="{% static 'images/uowlogo.png' %}" alt="logo">
+        </div>
+        <div class="navigation-container">
+          <ul>
+            <li>{{user}}</li>
+            <li><a href="{% url 'login' %}">Logout</a></li>
+          </ul>
+        </div>
+    </nav>
+
+    <div class="room-bar">
+        <h1>My Bookings</h1>
+    </div>
+    
+    <div class="room-list">
+        <table class ="room-table">
+            <tr>
+                <th id="Rooms">Room</td>
+                <th id="Locations">Location</td>
+                <th id="Date">Date</th>
+                <th id="Time">Time</th>
+                <th id="Options">Options</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.room.name }}</td>
+                <td>{{booking.room.location}}</td>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.time_slot }} - {{ booking.end_time }}</td>
+                <td>
+                    <!-- <a href="student_modifyBooking.html">Modify</a> -->
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+   
+</body>
+</html>

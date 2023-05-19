@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Calendar</title>
+<link rel="stylesheet" href="./style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script><script  src="./script.js"></script>
+</head>
+<body onload="func()">
+  <!--UOW LOGO-->
+  <div>
+      <img id="header" src="../images/logo-primary.png" alt="uow-logo">
+  </div>
+  <!--ROOM BOOKING TITLE-->
+  <div id="title-display">
+      <h1 id="room-booking">Room <br/> Booking</h1>
+  </div>
+  <!--ROOM CAROUSEL-->
+  <div class="box-template-1">
+    <div class="contain">
+      <input type="radio" name="slider" id="room-1" value="room-1" checked
+        onclick = "func()">
+      <input type="radio" name="slider" id="room-2" value="room-2"
+        onclick = "func()">
+      <input type="radio" name="slider" id="room-3" value="room-3"
+        onclick = "func()">
+      <div class="cards">
+        <label class="slide" for="room-1" id="song-1">
+          <img src="../images/room-1.jpg" alt="room-1">
+        </label>
+        <label class="slide" for="room-2" id="song-2">
+          <img src="../images/room-2.jpg" alt="room-2">
+        </label>
+        <label class="slide" for="room-3" id="song-3">
+          <img src="../images/room-3.jpg" alt="room-3">
+        </label>
+      </div>
+    </div>
+    <p class="room-desc desc-1">
+      The Executive Boardroom <br>
+      Step into sophistication and professionalism with our Executive Boardroom.
+      This spacious, elegantly furnished room offers a stunning view of the city skyline, 
+      state-of-the-art audiovisual equipment, and comfortable leather seating.
+      Ideal for high-level meetings and strategic discussions, this room sets the stage for success.
+    </p>
+    <p class="room-desc desc-2">
+      The Creative Collaboratorium <br>
+      Unleash your team's creativity in our vibrant Creative Collaboratorium. 
+      With colorful walls, writable surfaces, and flexible furniture arrangements, 
+      this room is designed to inspire innovation and foster collaboration. 
+      Equipped with cutting-edge technology and ample natural light it is perfect for brainstorming sessions and interactive workshops.
+    </p>
+    <p class="room-desc desc-3">
+      The Serene Retreat <br>
+      Find tranquility in our Serene Retreat, a peaceful oasis for intimate gatherings or one-on-one meetings.
+      Nestled away from distractions, this cozy room features comfortable seating, soft lighting, and a calming atmosphere.
+      This room offers a quiet haven to focus, reflect, and have meaningful conversations.
+    </p>
+  </div>
+
+  <!--CALENDAR-->
+  <div class="box-template-2">
+    <div id="booking-img">
+      <a href="http://whatever.com">
+        <img src="../images/booking-list.png" alt="">
+      </a>
+    </div>
+    <div>
+      <p id="room-listing-text">
+        <span>
+          Book a Room
+        </span> <br> <br>
+        Click on the icon to the left to view your bookings </p>
+    </div>
+  </div>
+  <table id="time-table">
+    <tr>
+      <td id="cal-logo"> <img id="calendar" src="../images/calendar-logo.png" alt="calendar-logo"> </td>
+      <td class="dayOfWeek"> Monday <br> 1 May </td>
+      <td class="dayOfWeek"> Tuesday <br> 2 May </td>
+      <td class="dayOfWeek"> Wednesday <br> 3 May </td>
+      <td class="dayOfWeek"> Thursday <br> 4 May </td>
+      <td class="dayOfWeek"> Friday <br> 5 May </td>
+      <td class="dayOfWeek"> Saturday <br> 6 May </td>
+      <td class="dayOfWeek"> Sunday <br> 7 May </td>
+    </tr>
+    
+    <tr>
+      <td class="time-list"></td>
+      <td colspan="7" id="legend-end"><img src="../images/legends.jpg" alt="legends"></td>
+    </tr>
+    
+
+    <tr id="08-row"> <td class="align-top time-list"> 08:00 </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+    </tr>
+    <tr id="10-row"> <td class="align-top time-list"> 10:00 </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+    </tr>
+    <tr id="12-row"> <td class="align-top time-list"> 12:00 </td> 
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+    </tr>
+    <tr id="14-row"> <td class="align-top time-list"> 14:00 </td> 
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+    </tr>
+    <tr id="16-row"> <td class="align-top time-list"> 16:00 </td> 
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+    </tr>
+    <tr id="18-row"> <td class="align-top time-list"> 18:00 </td>  
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+    </tr>
+    <tr id="20-row"> <td class="align-top time-list"> 20:00 </td> 
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+    </tr>
+    <tr id="22-row"> <td id="list-end" class="align-top time-list"> 22:00 </td> 
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+      <td> <a href="http://whatever.com"></a> </td>
+    </tr>
+  </table>
+</body>
+</html>

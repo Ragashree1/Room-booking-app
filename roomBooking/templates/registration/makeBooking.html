@@ -58,7 +58,29 @@
     button:hover {
         background-color: #0062cc;
     }
+
+    .errorMsg {
+        color: red;
+        margin-bottom: 10px;
+    }
+
     </style>
+    <script>
+        function checkDate() {
+			var newDate = new Date(document.getElementById("date").value)
+			var today = new Date();
+
+
+			if (newDate <= today) {
+				document.getElementById("date").value = "";
+				document.getElementById("dateError").innerHTML = "Please input a date later than today!";
+			}
+
+			else {
+				document.getElementById("dateError").innerHTML = "";
+			}
+		}
+    </script>
 </head>
 <body>
     <nav>
@@ -89,13 +111,14 @@
 		</select>
         <br>
         <label for="date">Date:</label>
-        <input type="date" id="date" name="date" value="2023-08-01" />
+        <input type="date" id="date" name="date" onBlur="checkDate()"/>
+        <span class="errorMsg" id="dateError"></span>
         <br>
         <label for="start-time">Start time: </label>
-        <input id="start-time" type="time" name="start-time" value="13:30" />
+        <input id="start-time" type="time" min="07:00" max="22:00" name="start-time"/>
         <br>
         <label for="end-time">End time: </label>
-        <input id="end-time" type="time" name="end-time" value="14:30" />
+        <input id="end-time" type="time" min="07:00" max="22:00" name="end-time" />
         <br>
         <label for="promocode">Promo code: </label>
         <input id="promocode" type="text" name="promocode"/>
